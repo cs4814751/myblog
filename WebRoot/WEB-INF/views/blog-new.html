@@ -34,7 +34,7 @@
     <nav style="height:100px" class="teal lighten-2">
         <div class="container" >
             <div class="nav-wrapper">
-                <a href="#" class="brand-logo" style="line-height:100px;font-size:48px">Admin</a>
+                <a href="#" class="brand-logo" style="line-height:100px;font-size:48px">发表文章</a>
             </div>
         </div>
     </nav>
@@ -45,8 +45,10 @@
     <li style="height:100px">
         <img width="200" src="../images/logoko.png" th:src="@{/resource/images/logoko.png}"  class="brand-logo" style="margin-left:50px;margin-top:10px" />
     </li>
-    <li class="teal lighten-2"><a href="#!">First Sidebar Link</a></li>
-    <li><a href="#!">Second Sidebar Link</a></li>
+    <li ><a href="#!"  th:href="@{/admin/archive/1}">管理文章</a></li>
+    <li class="teal lighten-2 "><a href="#!" class="white-text" th:href="@{/admin/blog/new}">发表文章</a></li>
+    <li><a>返回主页</a></li>
+    <li><a>退出登录</a></li>
 </ul>
 <a href="#" data-activates="slide-out" class="button-collapse white-text" style="position:absolute;top:25px"><i class="material-icons" style="font-size:50px">menu</i></a>
 
