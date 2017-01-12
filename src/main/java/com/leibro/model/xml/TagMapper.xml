@@ -14,6 +14,22 @@
     from tags
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByTag" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tags
+    where tag = #{tag}
+  </select>
+  <select id="selectByBlogId" resultMap="BaseResultMap">
+    SELECT
+    tags.id,tags.tag
+    FROM blogs
+    INNER JOIN blog_tag_link
+    ON blogs.id = blog_tag_link.blog_id
+    INNER JOIN tags
+    ON tags.id = blog_tag_link.tag_id
+    WHERE blogs.id = #{blog_id}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tags
     where id = #{id,jdbcType=INTEGER}

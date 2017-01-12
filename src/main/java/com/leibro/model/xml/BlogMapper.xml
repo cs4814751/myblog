@@ -19,6 +19,25 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+  <select id="selectAllOrderByCreateTimeDesc" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM blogs
+    ORDER BY create_time
+    DESC
+  </select>
+  <select id="selectAllByKeyword" resultMap="ResultMapWithBLOBs">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM blogs
+    WHERE MATCH (title,content) AGAINST (#{keyword} IN NATURAL LANGUAGE MODE)
+    ORDER BY create_time
+    DESC
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -26,6 +45,36 @@
     <include refid="Blob_Column_List" />
     from blogs
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUri" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blogs
+    where uri = #{uri}
+  </select>
+  <select id="selectByYearAndMonthOrderByDay" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    ,
+    <include refid="Blob_Column_List"/>
+    FROM blogs
+    WHERE
+    MONTH (create_time) = #{month} AND
+    YEAR (create_time) = #{year}
+    ORDER BY
+    DAY(create_time)
+    DESC
+  </select>
+  <select id="selectAllByTag" resultType="com.leibro.model.Blog" >
+    SELECT
+    blogs.id,blogs.title,blogs.content,blogs.read_count,blogs.create_time,blogs.last_modify,blogs.author,blogs.uri
+    FROM tags INNER JOIN blog_tag_link ON tags.id = blog_tag_link.tag_id
+    INNER JOIN blogs ON blogs.id = blog_tag_link.blog_id
+    WHERE tag = #{tag}
+    ORDER BY blogs.create_time
+    DESC
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blogs
@@ -142,4 +191,5 @@
       uri = #{uri,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

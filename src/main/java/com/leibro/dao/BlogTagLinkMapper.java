@@ -10,4 +10,6 @@ public interface BlogTagLinkMapper {
     int insert(BlogTagLinkKey record);
 
     int insertSelective(BlogTagLinkKey record);
+
+    int deleteByBlogId(int blog_id);
 }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        div.nav-wrapper {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .parallax-container {
+            height:300px;
+        }
+
+    </style>
+</head>
+<body>
+<header >
+    <nav class="transparent" >
+        <div class="nav-wrapper">
+            <img style="width: 150px"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
+
+            <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left:calc(100% - 220)" >
+
+                <input class="black-text" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  />
+                <i class="black-text material-icons" style="width:20%;display:inline">search</i>
+            </div>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+                <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
+                <li><a class="black-text" href="collapsible.html">About</a></li>
+            </ul>
+
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons black-text">menu</i></a>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+                <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
+                <li><a class="black-text" href="collapsible.html">About</a></li>
+            </ul>
+
+        </div>
+    </nav>
+</header>
+
+
+<div class="parallax-container col l12">
+    <div class="parallax"><img src="../images/parallax1.png" th:src="@{/resource/images/parallax1.png}" /></div>
+</div>
+<div class="row">
+    <div id="main-cards-container" class="col l7 offset-l1">
+        <div id="card-wrapper" class="card transparent black-text" th:each="blog:${blogs}">
+            <div class="card-image" th:if="${imgUrls.get(__${blog.id}__)}!= null">
+                <img src="../images/parallax1.png" th:src="${imgUrls.get(__${blog.id}__)}">
+            </div>
+            <div class="card-content">
+                <span class="card-title"><a class="black-text" href="#" th:text="${blog.title}" th:href="@{'/blogs/' + ${blog.uri}}">Card Title</a></span>
+                <div style="margin-bottom: 10px" th:text="${#dates.format(blog.createTime,'YYYY.MM.dd hh:mm')}">2017.01.02 23:00</div>
+                <p th:text="${abstractContents.get(__${blog.id}__)}">I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+        </div>
+        <!--<div class="container" align="center">-->
+            <!--<div  class="preloader-wrapper medium active">-->
+                <!--<div class="spinner-layer spinner-blue-only">-->
+                    <!--<div class="circle-clipper left">-->
+                        <!--<div class="circle"></div>-->
+                    <!--</div><div class="gap-patch">-->
+                    <!--<div class="circle"></div>-->
+                <!--</div><div class="circle-clipper right">-->
+                    <!--<div class="circle"></div>-->
+                <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+    <div id="right-container" class="col l3" >
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Card Title</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+            </div>
+        </div>
+
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Card Title</span>
+                <p>I am a very simple card. I am good at containing small bits of information.
+                    I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+                <a href="#">This is a link</a>
+                <a href="#">This is a link</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="footer-copyright">
+    <div class="container center-align ">
+        <div class="divider" style="margin-bottom:10px"></div>
+        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    </div>
+</div>
+<script type="text/javascript">
+    var offset = 0;
+    var done = true;
+    $(document).ready(function(){
+        $('.parallax').parallax();
+        $(".button-collapse").sideNav();
+    });
+    var winH = $(window).height();
+    $(window).scroll(function () {
+        var pageH = $(document.body).height(); //页面总高度
+        var scrollT = $(window).scrollTop(); //滚动条top
+        var aa = (pageH-winH-scrollT)/winH;
+        if(aa == 0){
+            if(!done) {
+                return;
+            }
+            offset ++;
+            $.ajax({
+                method:'get',
+                url:'/home?offset=' + offset,
+                beforeSend:function () {
+                    done = false;
+                    $('#main-cards-container').append('<div class="container" align="center">'
+                        + '<div  class="preloader-wrapper medium active">'
+                        + '<div class="spinner-layer spinner-blue-only">'
+                        +'<div class="circle-clipper left">'
+                        + '<div class="circle"></div>'
+                        + '</div><div class="gap-patch">'
+                        + '<div class="circle"></div>'
+                        + '</div><div class="circle-clipper right">'
+                        + '<div class="circle"></div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>');
+                },
+                success:function (data) {
+                    var handler = function () {
+                        $('#main-cards-container').children().last().remove();
+                        $('#main-cards-container').append(data);
+                        done = true;
+                    }
+                    setTimeout(handler,2000);
+                }
+            });
+
+        }
+    });
+
+
+
+</script>
+
+</body>
+</html>

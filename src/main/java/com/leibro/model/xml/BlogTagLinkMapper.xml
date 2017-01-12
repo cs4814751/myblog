@@ -33,4 +33,10 @@
       </if>
     </trim>
   </insert>
+  <delete id="deleteByBlogId" >
+    DELETE
+    FROM blog_tag_link
+    WHERE
+    blog_id = #{blog_id}
+  </delete>
 </mapper>

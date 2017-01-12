@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        #main-container,header,.footer-copyright {
+            padding-left: 300px;
+        }
+
+        @media only screen and (max-width : 992px) {
+            #main-container,header,.footer-copyright {
+                padding-left: 0;
+            }
+        }
+
+        #main-container {
+            margin-top:10px;
+        }
+
+
+    </style>
+</head>
+<body>
+<header >
+    <nav style="height:100px" class="teal lighten-2">
+        <div class="container" >
+
+
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo" style="line-height:100px;font-size:48px">Admin</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<ul id="slide-out" class="side-nav fixed">
+    <li style="height:100px">
+        <img width="200" src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" style="margin-left:50px;margin-top:10px" />
+    </li>
+    <li class="teal lighten-2"><a href="#!">First Sidebar Link</a></li>
+    <li><a href="#!">Second Sidebar Link</a></li>
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse white-text" style="position:absolute;top:25px"><i class="material-icons" style="font-size:50px">menu</i></a>
+
+<div id="main-container">
+    <div class="container" >
+        <div class="card" th:each="blog:${blogs}">
+            <div class="card-content black-text">
+                <span class="card-title" th:text="${blog.title}">Card Title</span>
+                <p th:text="${abstractContentMap.get(__${blog.id}__)}">豫章故郡，洪都新府。星分翼轸，地接衡庐。襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。都督阎公之雅望，棨戟遥临；宇文新州之懿范，襜帷暂驻。十旬休假，胜友如云；千里逢迎，高朋满座。腾蛟起凤，孟学士之词宗；紫电青霜，王将军之武库。家君作宰，路出名区；童子何知，躬逢胜饯。时维九月，序属三秋。潦水尽而寒潭清，烟光凝而暮山紫。俨骖騑于上路，访风景于崇阿；临帝子之长洲，得天人之旧馆。层峦耸翠，上出重霄；飞阁流丹，下临无地。鹤汀凫渚，穷岛屿之萦回；桂殿兰宫，即冈峦之体势。</p>
+            </div>
+            <div class="card-action">
+                <a class="black-text" href="#" th:href="@{'/admin/blog/edit/' + ${blog.id}}">编辑</a>
+                <a class="black-text" href="#" th:href="@{'/admin/blog/delete/' + ${blog.id}}">删除</a>
+            </div>
+        </div>
+
+
+        <ul class="pagination center">
+            <li class="disabled" th:class="${currentPage > 1}?'waves-effect':'disabled'"><a href="#!"  th:href="${currentPage > 1}?'/admin/archive/' + ${currentPage - 1}:'#!'"><i class="material-icons">chevron_left</i></a></li>
+            <li th:each="page:${#numbers.sequence(1,__${pageSum}__)}" th:class="${page == __${currentPage}__} ?'active':'waves-effect'"><a href="" th:href="@{'/admin/archive/' + ${page}}" th:text="${page}"></a></li>
+            <!--<li class="active"><a href="#!">1</a></li>-->
+            <!--<li class="waves-effect"><a href="#!">2</a></li>-->
+            <!--<li class="waves-effect"><a href="#!">3</a></li>-->
+            <!--<li class="waves-effect"><a href="#!">4</a></li>-->
+            <!--<li class="waves-effect"><a href="#!">5</a></li>-->
+            <li class="waves-effect" th:class="${currentPage < __${pageSum}__}?'waves-effect':'disabled'" ><a href="#!" th:href="${currentPage < __${pageSum}__}?'/admin/archive/' + ${currentPage + 1}:'#!'"><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+<div class="footer-copyright">
+    <div class="container center-align ">
+        <div class="divider" style="margin-bottom:10px"></div>
+        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(".button-collapse").sideNav();
+</script>
+
+</body>
+</html>

@@ -32,7 +32,7 @@ public class Blog {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public Integer getReadCount() {
@@ -72,7 +72,7 @@ public class Blog {
     }
 
     public void setUri(String uri) {
-        this.uri = uri == null ? null : uri.trim();
+        this.uri = uri;
     }
 
     public String getContent() {
@@ -80,6 +80,6 @@ public class Blog {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 }

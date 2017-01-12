@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="../resources/github-markdown.css" th:href="@{/resource/resources/github-markdown.css}">
+    <script src="../resources/markdown.js" th:src="@{/resource/resources/markdown.js}" ></script>
+    <script src="../resources/marked.js" th:src="@{/resource/resources/marked.js}" ></script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        div.nav-wrapper {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+        .chip a {
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(0,0,0,0.6);
+        }
+
+    </style>
+</head>
+<body>
+<header >
+    <nav class="transparent" >
+        <div class="nav-wrapper">
+            <img width="150"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo left" />
+            <div style="float:right;display:inline-block;width:180px;margin-left:calc(100% - 220)" >
+
+                <input class="black-text" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  />
+                <i class="black-text material-icons" style="width:20%;display:inline">search</i>
+            </div>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="black-text" href="sass.html">Home</a></li>
+                <li><a class="black-text" href="badges.html">Article</a></li>
+                <li><a class="black-text" href="collapsible.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="row">
+    <div id="blog-container" class="col l8 offset-l2" >
+        <div id="title" >
+            <h1 th:text="${blog.title}"></h1>
+        </div>
+        <div id="info" class="row">
+            <div class="col l3">
+                <i class="material-icons" style="vertical-align: middle">face</i>
+                <span th:text="${author.getUsername()}">Leibro</span>
+            </div>
+            <div class="col l3">
+                <i class="material-icons" style="vertical-align: middle">date_range</i>
+                <span th:text="${#dates.format(blog.createTime,'YYYY.MM.dd hh:mm')}">2017-01-07 23:00</span>
+            </div>
+            <div class="col l3" >
+                <i class="material-icons" style="vertical-align: middle">visibility</i>
+                <span style="display:inline-block;vertical-align: middle" th:text="${blog.readCount}" >300</span>
+            </div>
+            <div class="col l3">
+                <i class="material-icons" style="vertical-align: middle">build</i>
+                <a href="#" class="black-text" th:href="@{'/admin/blog/edit/' + ${blog.id}}">编辑</a>
+            </div>
+        </div>
+        <div id="tags" class="row">
+            <div class="chip" th:each="tag:${tags}">
+                <a  href="#" th:href="@{'/blogs/search?tag=' + ${tag.tag}}" th:text="${tag.tag}">
+                    Java
+                </a>
+            </div>
+            <!--<div class="chip">-->
+                <!--<a  href="#">-->
+                    <!--Spring-->
+                <!--</a>-->
+            <!--</div>-->
+            <!--<div class="chip">-->
+                <!--<a  href="#">-->
+                    <!--Test-->
+                <!--</a>-->
+            <!--</div>-->
+        </div>
+        <div id="content" style="margin-bottom: 20px" class="markdown-body">
+        </div>
+        <div class="divider" style="margin-bottom:10px"></div>
+        <div id="page-turner" class="row">
+            <div class="col s6 m6 l6 hoverable">
+                <i class="fa fa-angle-left fa-4x" aria-hidden="true" style="vertical-align: middle"></i>
+                <div class="container" style="display: inline-block;vertical-align: top;margin-left: 10px;width: 85%;">
+                    <a href="#" class="black-text" style="font-size: 20px;">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
+                </div>
+            </div>
+            <div class="col s6 m6 l6 hoverable" style="border-left: dashed;border-left-width: 1px;" >
+                <!--<div class="container" style="display: inline-block;vertical-align: middle;margin-left: 10px;margin-right:10px;width: 80%;">-->
+                <!--<a href="#" class="black-text" style="font-size: 20px;">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>-->
+                <!--</div>-->
+                <!--<i class="fa fa-angle-right fa-4x" aria-hidden="true" style="vertical-align: middle;"></i>-->
+
+                <div class="container" style="display: inline-block;vertical-align: top;margin-left: 10px;width: 80%;">
+                    <a href="#" class="black-text" style="font-size: 20px;">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
+                </div>
+                <i class="right fa fa-angle-right fa-4x" aria-hidden="true" style="vertical-align: middle"></i>
+            </div>
+        </div>
+        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+
+
+    </div>
+</div>
+
+<div class="footer-copyright">
+    <div class="container center-align ">
+        <div class="divider" style="margin-bottom:10px"></div>
+        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    var content = /*[[${blog.content}]]*/ null;
+    var blog_id = /*[[${blog.id}]]*/ null;
+    marked.setOptions({
+        breaks: true
+    });
+    $('#content').html(marked(content));
+    var cloudTieConfig = {
+        sourceId: blog_id,
+        productKey: "5152120cbb5246219b9df8cb128bce3e",
+        target: "cloud-tie-wrapper"
+    };
+    var yunManualLoad = true;
+    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+</script>
+</body>
+</html>

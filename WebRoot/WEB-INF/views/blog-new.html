@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        #main-container,header,.footer-copyright {
+            padding-left: 300px;
+        }
+
+        @media only screen and (max-width : 992px) {
+            #main-container,header,.footer-copyright {
+                padding-left: 0;
+            }
+        }
+
+        #main-container {
+            margin-top:10px;
+        }
+
+    </style>
+</head>
+<body>
+<header >
+    <nav style="height:100px" class="teal lighten-2">
+        <div class="container" >
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo" style="line-height:100px;font-size:48px">Admin</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<ul id="slide-out" class="side-nav fixed">
+    <li style="height:100px">
+        <img width="200" src="../images/logoko.png" th:src="@{/resource/images/logoko.png}"  class="brand-logo" style="margin-left:50px;margin-top:10px" />
+    </li>
+    <li class="teal lighten-2"><a href="#!">First Sidebar Link</a></li>
+    <li><a href="#!">Second Sidebar Link</a></li>
+</ul>
+<a href="#" data-activates="slide-out" class="button-collapse white-text" style="position:absolute;top:25px"><i class="material-icons" style="font-size:50px">menu</i></a>
+
+<div id="main-container">
+    <div class="container" style="width:85%" >
+        <div class="row" >
+            <div class="input-field col s6 offset-s3">
+                <input placeholder="Title" id="title" type="text" >
+            </div>
+            <div class="chips chips-placeholder col s8 offset-s2">
+            </div>
+            <div class="col s12" style="padding-left:0px;padding-right:0px">
+                <textarea></textarea>
+            </div>
+            <div class="container right" style="margin-top:10px">
+                <button class="btn waves-effect waves-light right" onclick="postNewBlog()">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="footer-copyright">
+    <div class="container center-align ">
+        <div class="divider" style="margin-bottom:10px"></div>
+        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    </div>
+</div>
+
+
+
+
+<script th:inline="javascript">
+    var simplemde = new SimpleMDE();
+    simplemde.codemirror.on('refresh', function() {
+        if(simplemde.isFullscreenActive()) {
+            $('#slide-out').attr('class','side-nav fixed hide');
+        } else {
+            $('#slide-out').attr('class','side-nav fixed');
+        }
+    });
+
+        $('.chips-placeholder').material_chip({
+            placeholder: 'Enter a tag',
+            secondaryPlaceholder: '+Tag',
+        });
+
+
+
+
+    function postNewBlog() {
+        var content = simplemde.value();
+        var tags = $('.chips').material_chip('data');
+        var title = $('#title').val();
+        var data = {
+            blog:{
+                title:title,
+                content:content
+            },
+            tags:tags
+        };
+        $.ajax({
+            method:'post',
+            url:'/admin/blog/post',
+            data:JSON.stringify(data),
+            contentType:'application/json;charset=UTF-8',
+            headers:{
+                Accept:'application/json;charset=UTF-8'
+            },
+            success:function (data) {
+                if(data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            }
+
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        div.nav-wrapper {
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+        a {
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+<header >
+    <nav class="transparent" >
+        <div class="nav-wrapper">
+            <img width="150"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo left" />
+
+            <div style="float:right;display:inline-block;width:180px;margin-left:calc(100% - 220)" >
+
+                <input class="black-text" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  />
+                <i class="black-text material-icons" style="width:20%;display:inline">search</i>
+            </div>
+
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="black-text" href="sass.html">Home</a></li>
+                <li><a class="black-text" href="badges.html">Article</a></li>
+                <li><a class="black-text" href="collapsible.html">About</a></li>
+            </ul>
+            <!-- <div class="black-text">
+            <i class="material-icons">search</i>    <input type="search"  />
+            </div> -->
+
+        </div>
+    </nav>
+</header>
+
+<div class="row" >
+
+    <div class="container col l8 offset-l2" >
+        <h2>Search Result For: <span class="teal-text lighten-2-text" th:text="${keyword}">Test</span></h2>
+        <div class="container col l12" th:each="blog:${blogs}">
+        <div class="section">
+            <a href="#" th:href="@{'/blogs/' + ${blog.uri}}"><h5 th:text="${blog.title}">Section 1</h5></a>
+            <p th:text="${abstractContents.get(__${blog.id}__)}">Stuff</p>
+        </div>
+        <div class="divider"></div>
+        </div>
+    </div>
+</div>
+
+
+<div class="footer-copyright">
+    <div class="container center-align ">
+        <div class="divider" style="margin-bottom:10px"></div>
+        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    </div>
+</div>
+</body>
+</html>
