@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 /**
  * Created by leibro on 2017/1/2.
  */
@@ -33,14 +35,14 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping("/blog/post")
-    public String postBlog(@RequestBody BlogAndTagsWrapper wrapper) {
-        return adminService.postBlog(wrapper);
+    public String postBlog(@RequestBody BlogAndTagsWrapper wrapper, Principal principal) {
+        return adminService.postBlog(wrapper,principal);
     }
 
     @ResponseBody
     @RequestMapping("/blog/update")
-    public String updateBlog(@RequestBody BlogAndTagsWrapper wrapper) {
-        return adminService.updateBlog(wrapper);
+    public String updateBlog(@RequestBody BlogAndTagsWrapper wrapper,Principal principal) {
+        return adminService.updateBlog(wrapper,principal);
     }
 
     @RequestMapping("/archive/{page}")
@@ -50,9 +52,10 @@ public class AdminController {
     }
 
     @RequestMapping("/blog/delete/{blog_id}")
-    public String deleteBlog(@PathVariable("blog_id") int blog_id) {
-        adminService.deleteBlog(blog_id);
+    public String deleteBlog(@PathVariable("blog_id") int blog_id,Principal principal) {
+        adminService.deleteBlog(blog_id,principal);
         return "redirect:/admin/archive/1";
     }
+
 
 }

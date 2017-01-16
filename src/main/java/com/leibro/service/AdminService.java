@@ -6,9 +6,11 @@ import com.google.gson.Gson;
 import com.leibro.dao.BlogMapper;
 import com.leibro.dao.BlogTagLinkMapper;
 import com.leibro.dao.TagMapper;
+import com.leibro.dao.UserMapper;
 import com.leibro.model.Blog;
 import com.leibro.model.BlogTagLinkKey;
 import com.leibro.model.Tag;
+import com.leibro.model.User;
 import com.leibro.model.wrapper.BlogAndTagsWrapper;
 import com.leibro.utils.BlogAbstractor;
 import com.leibro.utils.ChnCharToPinyin;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,15 +36,19 @@ public class AdminService {
     BlogTagLinkMapper blogTagLinkMapper;
 
     @Autowired
+    UserMapper userMapper;
+
+    @Autowired
     TagMapper tagMapper;
 
-    public String postBlog(BlogAndTagsWrapper wrapper) {
+    public String postBlog(BlogAndTagsWrapper wrapper, Principal principal) {
+        User user = userMapper.selectByUsername(principal.getName());
         Blog blog = wrapper.getBlog();
         List<Tag> tags = wrapper.getTags();
         String uri = ChnCharToPinyin.toPinyin(blog.getTitle());
         blog.setLastModify(new Date());
         blog.setCreateTime(new Date());
-        blog.setAuthor(1);
+        blog.setAuthor(user.getId());
         blog.setReadCount(0);
         Blog blog1 = blogMapper.selectByUri(uri);
         if(blog1 == null) {
@@ -74,7 +81,7 @@ public class AdminService {
         return gson.toJson(returnJSon);
     }
 
-    public String updateBlog(BlogAndTagsWrapper blogAndTagsWrapper) {
+    public String updateBlog(BlogAndTagsWrapper blogAndTagsWrapper,Principal principal) {
         Blog blog = blogAndTagsWrapper.getBlog();
         blog.setUri(ChnCharToPinyin.toPinyin(blog.getTitle()));
         blog.setLastModify(new Date());
@@ -125,7 +132,7 @@ public class AdminService {
         model.addAttribute("blog",blog);
     }
 
-    public void deleteBlog(int blog_id) {
+    public void deleteBlog(int blog_id,Principal principal) {
         blogTagLinkMapper.deleteByBlogId(blog_id);
         blogMapper.deleteByPrimaryKey(blog_id);
     }

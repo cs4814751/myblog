@@ -12,11 +12,11 @@ import org.junit.runner.RunWith;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
  * Created by leibro on 2017/1/2.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(value = "classpath:applicationContext.xml")
+@ContextConfiguration(value = "classpath:spring-config/applicationContext.xml")
 public class SpringTest {
     @Autowired
     BlogMapper blogMapper;
@@ -93,6 +93,12 @@ public class SpringTest {
         matcher1.find();
         String imgUrl = matcher1.group(0);
         System.out.println(imgUrl);
+    }
+
+    @Test
+    public void test5() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.matches("Zhulei4814751","$2a$10$7csX4X1dZzRznQiSW8iyAuvg92scHziabKoEqSRktyWNI8oj5VRNi"));
     }
 
 }

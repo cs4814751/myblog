@@ -9,7 +9,12 @@
 
     <mvc:resources mapping="/resource/**" location="/WEB-INF/" />
 
+    <mvc:interceptors>
+        <bean id="logInterceptor" class="com.leibro.utils.LogInterceptor" />
+    </mvc:interceptors>
+
     <context:component-scan base-package="com.leibro.controller" />
+
 
     <bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver" >
         <property name="templateEngine" ref="templateEngine" />
@@ -26,5 +31,13 @@
     <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine" >
         <property name="templateResolver" ref="templateResolver" />
         <property name="enableSpringELCompiler" value="true" />
+        <property name="additionalDialects">
+            <set>
+                <!-- Note the package would change to 'springsecurity3' if you are using that version -->
+                <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect"/>
+            </set>
+        </property>
     </bean>
+
+    <bean id="springSecurityDialect" class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
 </beans>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -10,6 +10,8 @@
     <script src="../resources/markdown.js" th:src="@{/resource/resources/markdown.js}" ></script>
     <script src="../resources/marked.js" th:src="@{/resource/resources/marked.js}" ></script>
     <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    <script src="../resources/nprogress.js" th:src="@{/resource/resources/nprogress.js}"></script>
+    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{/resource/resources/nprogress.css}">
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -29,21 +31,40 @@
     </style>
 </head>
 <body>
+<script>
+    NProgress.start();
+</script>
+
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
-            <img width="150"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo left" />
-            <div style="float:right;display:inline-block;width:180px;margin-left:calc(100% - 220)" >
+            <img style="width: 150px"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
 
-                <input class="black-text" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  />
+            <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
+
+                <input id="search-input" class="black-text tooltipped" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  data-position="bottom" data-delay="50" data-tooltip="Enter to search" />
                 <i class="black-text material-icons" style="width:20%;display:inline">search</i>
             </div>
 
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a class="black-text" href="sass.html">Home</a></li>
-                <li><a class="black-text" href="badges.html">Article</a></li>
+                <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+                <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
                 <li><a class="black-text" href="collapsible.html">About</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="black-text" href="#" th:href="@{/admin/archive/1}">Panel</a></li>
+                <li sec:authorize="isAnonymous()"><a class="black-text" href="#modal1">Login</a></li>
+                <li sec:authorize="isAuthenticated()" ><a type="submit" class="black-text" onclick="logout()">Logout</a></li>
             </ul>
+
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons black-text">menu</i></a>
+            <ul class="side-nav" id="mobile-demo">
+                <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+                <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
+                <li><a class="black-text" href="collapsible.html">About</a></li>
+                <li sec:authorize="isAuthenticated()"><a class="black-text" href="#" th:href="@{/admin/archive/1}">Panel</a></li>
+                <li sec:authorize="isAnonymous()"><a class="black-text" href="#modal1">Login</a></li>
+                <li sec:authorize="isAuthenticated()" ><a type="submit" class="black-text" onclick="logout()">Logout</a></li>
+            </ul>
+
         </div>
     </nav>
 </header>
@@ -66,7 +87,7 @@
                 <i class="material-icons" style="vertical-align: middle">visibility</i>
                 <span style="display:inline-block;vertical-align: middle" th:text="${blog.readCount}" >300</span>
             </div>
-            <div class="col l3">
+            <div class="col l3" sec:authorize="hasRole('ROLE_ADMIN')">
                 <i class="material-icons" style="vertical-align: middle">build</i>
                 <a href="#" class="black-text" th:href="@{'/admin/blog/edit/' + ${blog.id}}">编辑</a>
             </div>
@@ -119,10 +140,31 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
     </div>
 </div>
 
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Login</h4>
+        <div class="row">
+            <form class="col s12" action="#" th:action="@{/login}" method="post">
+                <div class="input-field col s12">
+                    <input placeholder="Please input username" id="user_name" type="text" class="validate" name="username">
+                    <label for="user_name">Username</label>
+                </div>
+                <div class="input-field col s12">
+                    <input placeholder="Please input password" id="password" type="password" class="validate" name="password">
+                    <label for="password">Password</label>
+                </div>
+                <div class="col s2 offset-s10">
+                    <input type="submit" class="waves-effect waves-light btn" value="Log"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script th:inline="javascript">
     var content = /*[[${blog.content}]]*/ null;
@@ -130,6 +172,25 @@
     marked.setOptions({
         breaks: true
     });
+
+    window.onload = function () {
+        NProgress.done();
+    };
+
+    $(document).ready(function () {
+        NProgress.set(0.5);
+        $('.modal').modal();
+        $('.tooltipped').tooltip({delay: 50});
+        $(".button-collapse").sideNav();
+    });
+
+    $('#search-input').bind('keypress',function(e){
+        if(e.keyCode == '13') {
+            var keyword = $(this).val();
+            window.location.href = '/blogs/search?keyword=' + keyword;
+        }
+    });
+
     $('#content').html(marked(content));
     var cloudTieConfig = {
         sourceId: blog_id,
@@ -138,6 +199,22 @@
     };
     var yunManualLoad = true;
     Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+
+    function logout() {
+        var csrf = /*[[${_csrf.token}]]*/ null;
+        $.ajax({
+            method:'post',
+            url:'/logout',
+            headers:{
+                'X-CSRF-TOKEN':csrf
+            },
+            success:function () {
+                window.location.href = '/home';
+            }
+
+
+        });
+    }
 </script>
 </body>
 </html>

@@ -36,4 +36,15 @@ public class HomeController {
         visitService.getBlogsForHomeByOffset(model,offset);
         return "home :: #card-wrapper";
     }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping(value = "/login",params = {"error"})
+    public String loginError(Model model) {
+        model.addAttribute("error",true);
+        return "login";
+    }
 }

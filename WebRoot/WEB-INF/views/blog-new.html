@@ -47,8 +47,8 @@
     </li>
     <li ><a href="#!"  th:href="@{/admin/archive/1}">管理文章</a></li>
     <li class="teal lighten-2 "><a href="#!" class="white-text" th:href="@{/admin/blog/new}">发表文章</a></li>
-    <li><a>返回主页</a></li>
-    <li><a>退出登录</a></li>
+    <li><a href="#" th:href="@{/home}">返回主页</a></li>
+    <li><a href="javascript:logout()">退出登录</a></li>
 </ul>
 <a href="#" data-activates="slide-out" class="button-collapse white-text" style="position:absolute;top:25px"><i class="material-icons" style="font-size:50px">menu</i></a>
 
@@ -79,7 +79,7 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
     </div>
 </div>
 
@@ -105,13 +105,14 @@
 
 
     function postNewBlog() {
+        var csrf = /*[[${_csrf.token}]]*/ null;
         var content = simplemde.value();
         var tags = $('.chips').material_chip('data');
         var title = $('#title').val();
         var data = {
             blog:{
                 title:title,
-                content:content
+                content:content,
             },
             tags:tags
         };
@@ -121,13 +122,30 @@
             data:JSON.stringify(data),
             contentType:'application/json;charset=UTF-8',
             headers:{
-                Accept:'application/json;charset=UTF-8'
+                Accept:'application/json;charset=UTF-8',
+                'X-CSRF-TOKEN':csrf
             },
             success:function (data) {
                 if(data.redirect) {
                     window.location.href = data.redirect;
                 }
             }
+
+        });
+    }
+
+    function logout() {
+        var csrf = /*[[${_csrf.token}]]*/ null;
+        $.ajax({
+            method:'post',
+            url:'/logout',
+            headers:{
+                'X-CSRF-TOKEN':csrf
+            },
+            success:function () {
+                window.location.href = '/home';
+            }
+
 
         });
     }

@@ -49,8 +49,8 @@
     </li>
     <li class="teal lighten-2 "><a href="#!" class="white-text" th:href="@{/admin/archive/1}">管理文章</a></li>
     <li><a href="#!" th:href="@{/admin/blog/new}">发表文章</a></li>
-    <li><a>返回主页</a></li>
-    <li><a>退出登录</a></li>
+    <li><a href="#" th:href="@{/home}">返回主页</a></li>
+    <li><a href="javascript:logout()">退出登录</a></li>
 </ul>
 <a href="#" data-activates="slide-out" class="button-collapse white-text" style="position:absolute;top:25px"><i class="material-icons" style="font-size:50px">menu</i></a>
 
@@ -58,7 +58,7 @@
     <div class="container" >
         <div class="card" th:each="blog:${blogs}">
             <div class="card-content black-text">
-                <span class="card-title" th:text="${blog.title}">Card Title</span>
+                <a th:href="@{'/blogs/' + ${blog.uri}}"><span class="card-title black-text" th:text="${blog.title}">Card Title</span></a>
                 <p th:text="${abstractContentMap.get(__${blog.id}__)}">豫章故郡，洪都新府。星分翼轸，地接衡庐。襟三江而带五湖，控蛮荆而引瓯越。物华天宝，龙光射牛斗之墟；人杰地灵，徐孺下陈蕃之榻。雄州雾列，俊采星驰。台隍枕夷夏之交，宾主尽东南之美。都督阎公之雅望，棨戟遥临；宇文新州之懿范，襜帷暂驻。十旬休假，胜友如云；千里逢迎，高朋满座。腾蛟起凤，孟学士之词宗；紫电青霜，王将军之武库。家君作宰，路出名区；童子何知，躬逢胜饯。时维九月，序属三秋。潦水尽而寒潭清，烟光凝而暮山紫。俨骖騑于上路，访风景于崇阿；临帝子之长洲，得天人之旧馆。层峦耸翠，上出重霄；飞阁流丹，下临无地。鹤汀凫渚，穷岛屿之萦回；桂殿兰宫，即冈峦之体势。</p>
             </div>
             <div class="card-action">
@@ -88,15 +88,31 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
     </div>
 </div>
 
 
 
 
-<script>
+<script th:inline="javascript">
     $(".button-collapse").sideNav();
+
+    function logout() {
+        var csrf = /*[[${_csrf.token}]]*/ null;
+        $.ajax({
+            method:'post',
+            url:'/logout',
+            headers:{
+                'X-CSRF-TOKEN':csrf
+            },
+            success:function () {
+                window.location.href = '/home';
+            }
+
+
+        });
+    }
 </script>
 
 </body>

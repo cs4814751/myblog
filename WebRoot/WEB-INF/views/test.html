@@ -25,30 +25,29 @@
 <header >
   <nav class="transparent" >
     <div class="nav-wrapper">
-      <img width="150"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
+      <img style="width: 150px"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
 
-      <div class="hide-on-med-and-down" style="float:right;display:inline-block;width:180px;margin-left:calc(100% - 220)" >
+      <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 
-        <input class="black-text" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  />
+        <input id="search-input" class="black-text tooltipped" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  data-position="bottom" data-delay="50" data-tooltip="Enter to search" />
         <i class="black-text material-icons" style="width:20%;display:inline">search</i>
       </div>
 
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="black-text" href="sass.html">Home</a></li>
-        <li><a class="black-text" href="badges.html">Article</a></li>
+        <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+        <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
         <li><a class="black-text" href="collapsible.html">About</a></li>
+        <li sec:authorize="isAuthenticated()"><a class="black-text" href="#" th:href="@{/admin/archive/1}">Panel</a></li>
+        <li sec:authorize="isAnonymous()"><a class="black-text" href="#modal1">Login</a></li>
+        <li sec:authorize="isAuthenticated()" ><a type="submit" class="black-text" onclick="logout()">Logout</a></li>
       </ul>
 
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons black-text">menu</i></a>
       <ul class="side-nav" id="mobile-demo">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
+        <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
+        <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
+        <li><a class="black-text" href="collapsible.html">About</a></li>
       </ul>
-      <!-- <div class="black-text">
-      <i class="material-icons">search</i>    <input type="search"  />
-      </div> -->
 
     </div>
   </nav>
@@ -128,14 +127,38 @@
 <div class="footer-copyright">
   <div class="container center-align ">
     <div class="divider" style="margin-bottom:10px"></div>
-    <a class="black-text transparent " href="#!">© 2014 Copyright Text</a>
+    <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
   </div>
 </div>
+
+
 <script >
     $(document).ready(function(){
         $('.parallax').parallax();
         $(".button-collapse").sideNav();
+        $('.tooltipped').tooltip({delay: 50});
     });
+
+    $('#search-input').bind('keypress',function(e){
+        if(e.keyCode == '13') {
+            var keyword = $(this).val();
+            window.location.href = '/blogs/search?keyword=' + keyword;
+        }
+    });
+
+    function logout() {
+        var csrf = /*[[${_csrf.token}]]*/ null;
+        $.ajax({
+            method:'post',
+            url:'/logout',
+            headers:{
+                'X-CSRF-TOKEN':csrf
+            },
+            success:function () {
+                window.location.href = '/home';
+            }
+        });
+    }
 </script>
 
 </body>
