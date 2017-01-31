@@ -22,4 +22,6 @@ public interface TagMapper {
     Tag selectByTag(String tag);
 
     List<Tag> selectByBlogId(int blog_id);
+
+    List<Tag> selectByFreq();
 }

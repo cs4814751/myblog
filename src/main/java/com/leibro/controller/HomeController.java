@@ -29,6 +29,7 @@ public class HomeController {
     public String visitHome(Model model) {
         visitService.getBlogsForHomeByOffset(model,0);
         visitService.getHotestBlogs(model);
+        visitService.getHotestTags(model);
         return "home";
     }
 

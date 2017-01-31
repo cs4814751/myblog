@@ -14,6 +14,18 @@
     from tags
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByFreq" resultMap="BaseResultMap" >
+    select
+    count(*) as cnt,tags.`tag`,tags.`id`
+    FROM
+    `blog_tag_link`
+    inner join tags on tags.id = `blog_tag_link`.`tag_id`
+    group by
+    tag_id
+    order by
+    cnt
+    desc
+  </select>
   <select id="selectByTag" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />

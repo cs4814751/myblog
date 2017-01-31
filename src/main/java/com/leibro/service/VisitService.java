@@ -65,14 +65,18 @@ public class VisitService {
         PageHelper.startPage(offset + 1,6);
         List<Blog> blogs = blogMapper.selectAllOrderByCreateTimeDesc();
         Map imgUrls = new HashMap();
+        Map<Integer,List<Tag>> tagsOfBlog = new HashMap();
         Map abstractContents = new HashMap();
         for(Blog blog:blogs) {
             imgUrls.put(blog.getId(), BlogAbstractor.abstractImgUrl(blog.getContent()));
             abstractContents.put(blog.getId(),BlogAbstractor.abstractContent(blog.getContent()));
+            List<Tag> tags = tagMapper.selectByBlogId(blog.getId());
+            tagsOfBlog.put(blog.getId(),tags);
         }
         model.addAttribute("blogs",blogs);
         model.addAttribute("imgUrls",imgUrls);
         model.addAttribute("abstractContents",abstractContents);
+        model.addAttribute("tags",tagsOfBlog);
     }
 
     public void searchBlogsByKeyword(String keyword,Model model) {
@@ -98,8 +102,13 @@ public class VisitService {
     }
 
     public void getHotestBlogs(Model model) {
-        List<Blog> hotestBlog = blogDao.selectHotestBlog();
-        model.addAttribute("hotest",hotestBlog);
+        List<Blog> hotestBlogs = blogDao.selectHotestBlog();
+        model.addAttribute("hotest",hotestBlogs);
+    }
+
+    public void getHotestTags(Model model) {
+        List<Tag> hotestTags = tagMapper.selectByFreq();
+        model.addAttribute("hotestTags",hotestTags);
     }
 
 //    @Cacheable(cacheNames = "blog",key = "#id")
