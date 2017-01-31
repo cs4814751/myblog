@@ -85,7 +85,7 @@
             </div>
             <div class="col l3" >
                 <i class="material-icons" style="vertical-align: middle">visibility</i>
-                <span style="display:inline-block;vertical-align: middle" th:text="${blog.readCount}" >300</span>
+                <span style="display:inline-block;vertical-align: middle" th:text="${count}" >300</span>
             </div>
             <div class="col l3" sec:authorize="hasRole('ROLE_ADMIN')">
                 <i class="material-icons" style="vertical-align: middle">build</i>

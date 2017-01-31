@@ -5,18 +5,23 @@ import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 
 
+import com.leibro.dao.BlogDao;
 import com.leibro.dao.BlogMapper;
 import com.leibro.model.Blog;
+import com.leibro.service.VisitService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +34,14 @@ public class SpringTest {
     @Autowired
     BlogMapper blogMapper;
 
+    @Autowired
+    VisitService visitService;
+
+    @Autowired
+    RedisTemplate template;
+
+    @Autowired
+    BlogDao blogDao;
 
     @Test
     public void test() throws PinyinException {
@@ -100,5 +113,39 @@ public class SpringTest {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         System.out.println(encoder.matches("Zhulei4814751","$2a$10$7csX4X1dZzRznQiSW8iyAuvg92scHziabKoEqSRktyWNI8oj5VRNi"));
     }
+
+    @Test
+    public void test6() {
+        blogMapper.selectByPrimaryKey(19);
+    }
+
+    @Test
+    public void test7() {
+        Blog blog = new Blog();
+        blog.setId(19);
+        for(int i = 0;i < 5;i ++) {
+            blogDao.addViewCount(19);
+        }
+
+    }
+
+    @Test
+    public void test8() {
+        ZSetOperations operations = template.opsForZSet();
+        Set<Integer> entries = operations.range("count",0,-1);
+        if(entries.size() > 0) {
+            for (int id : entries) {
+                double score = operations.score("count", id);
+                System.out.println(score);
+            }
+        }
+    }
+
+    @Test
+    public void test9() {
+        Blog blog = blogDao.selectByPrimaryKey(19);
+        System.out.print(blog.getTitle());
+    }
+
 
 }

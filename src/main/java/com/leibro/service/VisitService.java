@@ -1,6 +1,7 @@
 package com.leibro.service;
 
 import com.github.pagehelper.PageHelper;
+import com.leibro.dao.BlogDao;
 import com.leibro.dao.BlogMapper;
 import com.leibro.dao.TagMapper;
 import com.leibro.dao.UserMapper;
@@ -9,9 +10,11 @@ import com.leibro.model.Tag;
 import com.leibro.model.User;
 import com.leibro.utils.BlogAbstractor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.annotation.PostConstruct;
 import java.time.Month;
 import java.util.*;
 
@@ -20,6 +23,12 @@ import java.util.*;
  */
 @Service
 public class VisitService {
+//    @Autowired
+//    BlogMapper blogMapper;
+
+    @Autowired
+    BlogDao blogDao;
+
     @Autowired
     BlogMapper blogMapper;
 
@@ -29,13 +38,14 @@ public class VisitService {
     @Autowired
     TagMapper tagMapper;
 
+
     public void visitBlog(String uri,Model model) {
-        Blog blog = blogMapper.selectByUri(uri);
+        Blog blog = blogDao.selectByUri(uri);
         User user = userMapper.selectByPrimaryKey(blog.getAuthor());
-        int readCount = blog.getReadCount();
-        blog.setReadCount(++ readCount);
-        blogMapper.updateByPrimaryKeySelective(blog);
+        blogDao.addViewCount(blog.getId());
         List<Tag> tags = tagMapper.selectByBlogId(blog.getId());
+        int cacheCount = blogDao.getBlogCacheCount(blog.getId());
+        model.addAttribute("count",cacheCount + blog.getReadCount());
         model.addAttribute("blog",blog);
         model.addAttribute("tags",tags);
         model.addAttribute("author",user);
@@ -44,7 +54,7 @@ public class VisitService {
     public void blogYearArchive(int year,Model model) {
         Map<String,List<Blog>> allMonthBlogs = new LinkedHashMap<>();
         for(int i = 1;i <= 12;i ++) {
-            List<Blog> blogs = blogMapper.selectByYearAndMonthOrderByDay(year,i);
+            List<Blog> blogs = blogDao.selectByYearAndMonthOrderByDay(year,i);
             allMonthBlogs.put(Month.of(i).toString(),blogs);
         }
         model.addAttribute("allMonthBlogs",allMonthBlogs);
@@ -66,7 +76,7 @@ public class VisitService {
     }
 
     public void searchBlogsByKeyword(String keyword,Model model) {
-        List<Blog> blogs = blogMapper.selectAllByKeyword(keyword);
+        List<Blog> blogs = blogDao.selectAllByKeyword(keyword);
         Map abstractContents = new HashMap();
         for(Blog blog:blogs) {
             abstractContents.put(blog.getId(),BlogAbstractor.abstractContent(blog.getContent()));
@@ -77,7 +87,7 @@ public class VisitService {
     }
 
     public void searchBlogsByTag(String tag,Model model) {
-        List<Blog> blogs = blogMapper.selectAllByTag(tag);
+        List<Blog> blogs = blogDao.selectAllByTag(tag);
         Map abstractContents = new HashMap();
         for(Blog blog:blogs) {
             abstractContents.put(blog.getId(),BlogAbstractor.abstractContent(blog.getContent()));
@@ -86,5 +96,16 @@ public class VisitService {
         model.addAttribute("keyword",tag);
         model.addAttribute("abstractContents",abstractContents);
     }
+
+    public void getHotestBlogs(Model model) {
+        List<Blog> hotestBlog = blogDao.selectHotestBlog();
+        model.addAttribute("hotest",hotestBlog);
+    }
+
+//    @Cacheable(cacheNames = "blog",key = "#id")
+//    public Blog visitBlog(int id) {
+//        System.out.println("缓存未命中………………");
+//        return blogMapper.selectByPrimaryKey(id);
+//    }
 
 }

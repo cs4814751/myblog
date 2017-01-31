@@ -2,13 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <!-- bean definitions here -->
+    <task:annotation-driven scheduler="scheduler" />
+    <task:scheduler id="scheduler" pool-size="5" />
+
     <context:component-scan base-package="com.leibro" >
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
+
+    <cache:annotation-driven />
 
     <aop:aspectj-autoproxy proxy-target-class="true" />
 
@@ -50,6 +56,33 @@
 
     <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
+    <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" id="jedisConnectionFactory" >
+        <property name="hostName" value="${redis.hostname}" />
+        <property name="port" value="${redis.port}" />
+        <property name="password" value="${redis.password}" />
+        <property name="usePool" value="true" />
+    </bean>
+
+    <bean class="org.springframework.data.redis.core.RedisTemplate" id="redisTemplate" >
+        <property name="keySerializer"  ref="jdkSerializationRedisSerializer" />
+        <property name="valueSerializer" ref="jdkSerializationRedisSerializer" />
+        <property name="connectionFactory" ref="jedisConnectionFactory" />
+    </bean>
+
+    <bean class="org.springframework.data.redis.serializer.GenericToStringSerializer" id="genericToStringSerializer" >
+        <constructor-arg type="java.lang.Class">
+            <value>java.lang.Integer</value>
+        </constructor-arg>
+    </bean>
+
+    <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" id="stringRedisSerializer"/>
 
 
+    <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" id="jdkSerializationRedisSerializer" />
+
+    <bean class="org.springframework.data.redis.cache.RedisCacheManager" id="cacheManager" >
+        <constructor-arg ref="redisTemplate" />
+    </bean>
+
+    <bean class="com.leibro.utils.SchedularTask" />
 </beans>

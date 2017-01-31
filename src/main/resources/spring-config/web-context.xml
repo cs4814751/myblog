@@ -40,4 +40,5 @@
     </bean>
 
     <bean id="springSecurityDialect" class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+
 </beans>

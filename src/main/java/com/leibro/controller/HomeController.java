@@ -28,6 +28,7 @@ public class HomeController {
     @RequestMapping("/home")
     public String visitHome(Model model) {
         visitService.getBlogsForHomeByOffset(model,0);
+        visitService.getHotestBlogs(model);
         return "home";
     }
 
