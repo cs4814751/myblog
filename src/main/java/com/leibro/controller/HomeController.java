@@ -1,8 +1,10 @@
 package com.leibro.controller;
 
 import com.leibro.service.VisitService;
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
     @Autowired
     VisitService visitService;
+
+    @RequestMapping("/")
+    public String test(Model model) {
+        visitService.getBlogsForHomeByOffset(model,0);
+        visitService.getHotestBlogs(model);
+        visitService.getHotestTags(model);
+        return "home";
+    }
 
     @RequestMapping("/main")
     public String test() {

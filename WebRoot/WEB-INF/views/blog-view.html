@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" th:href="@{'http://oizochynr.bkt.clouddn.com/materialize.min.css'}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="../resources/github-markdown.css" th:href="@{/resource/resources/github-markdown.css}">
-    <script src="../resources/markdown.js" th:src="@{/resource/resources/markdown.js}" ></script>
-    <script src="../resources/marked.js" th:src="@{/resource/resources/marked.js}" ></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/jquery-2.1.1.min.js'}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/materialize.min.js'}"></script>
+    <script src="../resources/nprogress.js" th:src="@{'http://oizochynr.bkt.clouddn.com/nprogress.js'}"></script>
+    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{'http://oizochynr.bkt.clouddn.com/nprogress.css'}">
+    <link rel="stylesheet" href="../resources/github-markdown.css" th:href="@{'http://oizochynr.bkt.clouddn.com/github-markdown.css'}">
+    <!--<script src="../resources/markdown.js" th:src="@{'http://oizochynr.bkt.clouddn.com/markdown.js'}" ></script>-->
+    <script src="../resources/marked.js" th:src="@{'http://oizochynr.bkt.clouddn.com/marked.js'}" ></script>
     <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
-    <script src="../resources/nprogress.js" th:src="@{/resource/resources/nprogress.js}"></script>
-    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{/resource/resources/nprogress.css}">
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -38,7 +38,7 @@
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
-            <img style="width: 150px"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
+            <img style="width: 150px"  src="../images/logoko.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-logoko.png'}" class="brand-logo" />
 
             <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 

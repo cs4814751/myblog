@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" th:href="@{'http://oizochynr.bkt.clouddn.com/materialize.min.css'}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-    <script src="../resources/nprogress.js" th:src="@{/resource/resources/nprogress.js}"></script>
-    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{/resource/resources/nprogress.css}">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/jquery-2.1.1.min.js'}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/materialize.min.js'}"></script>
+    <script src="../resources/nprogress.js" th:src="@{'http://oizochynr.bkt.clouddn.com/nprogress.js'}"></script>
+    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{'http://oizochynr.bkt.clouddn.com/nprogress.css'}">
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -31,7 +31,7 @@
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
-            <img style="width: 150px"  src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" />
+            <img style="width: 150px"  src="../images/logoko.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-logoko.png'}" class="brand-logo" />
 
             <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 
@@ -64,7 +64,7 @@
 
 
 <div class="parallax-container col l12">
-    <div class="parallax"><img src="../images/parallax1.png" th:src="@{/resource/images/parallax1.png}" /></div>
+    <div class="parallax"><img src="../images/parallax1.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-parallax1.png'}" /></div>
 </div>
 <div class="row">
     <div id="main-cards-container" class="col l7 offset-l1">
@@ -101,20 +101,34 @@
     <div id="right-container" class="col l3 hide-on-med-and-down"  >
         <div class="card transparent">
             <div class="card-content black-text">
-                <span class="card-title">今天最热的博客</span>
-                <ul>
-                    <li th:each="blog,iterStat:${hotest}"><a href="#" class="black-text" th:href="@{'/blogs/' + ${blog.uri}}" th:text="${iterStat.count} + '.' + ${blog.getTitle()}">这是测试1</a></li>
-                </ul>
+                <span class="card-title">Trend</span>
+                <div>
+                    <ul style="margin-top: 0px;margin-bottom: 0px">
+                        <li th:each="blog,iterStat:${hotest}"><a href="#" class="black-text" th:href="@{'/blogs/' + ${blog.uri}}" th:text="${iterStat.count} + '.' + ${blog.getTitle()}">这是测试1</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
         <div class="card transparent">
             <div class="card-content black-text">
-                <span class="card-title">最热标签</span>
+                <span class="card-title">Topic</span>
                 <div>
                     <div class="chip" th:each="tag:${hotestTags}">
                         <a href="#" class="black-text" th:href="@{'/blogs/search?tag=' + ${tag.tag}}" th:text="${tag.tag}">Tag</a>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="card transparent">
+            <div class="card-content black-text">
+                <span class="card-title">Connect</span>
+                <div>
+                    <a href="https://twitter.com/Flymeist"><img src="../images/twitter.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-twitter.png'}" alt="" class="circle responsive-img"></a>
+                    <a href="http://weibo.com/pigpigsky"><img src="../images/sina.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-sina.png'}" alt="" class="circle responsive-img"></a>
+                    <a href="https://github.com/cs4814751"><img src="../images/github.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-github.png'}" alt="" class="circle responsive-img"></a>
+                    <a href="https://www.zhihu.com/people/zhu-xiao-lei-48"><img src="../images/zhihu.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-zhihu.png'}" alt="" class="circle responsive-img"></a>
+                    <a href="https://www.v2ex.com/member/cs4814751"><img src="../images/v2ex.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-v2ex.png'}" alt="" class="circle responsive-img"></a>
                 </div>
             </div>
         </div>
@@ -125,7 +139,7 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-footer-icon.png'}">
     </div>
 </div>
 
