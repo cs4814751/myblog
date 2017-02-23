@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.css.network/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'https://okyl890b4.qnssl.com/jquery-2.1.1.min.js'}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'https://okyl890b4.qnssl.com/materialize.min.js'}"></script>
 
     <style>
         body {
@@ -45,7 +45,7 @@
 
 <ul id="slide-out" class="side-nav fixed">
     <li style="height:100px">
-        <img width="200" src="../images/logoko.png" th:src="@{/resource/images/logoko.png}" class="brand-logo" style="margin-left:50px;margin-top:10px" />
+        <img width="200" src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}" class="brand-logo" style="margin-left:50px;margin-top:10px" />
     </li>
     <li class="teal lighten-2 "><a href="#!" class="white-text" th:href="@{/admin/archive/1}">管理文章</a></li>
     <li><a href="#!" th:href="@{/admin/blog/new}">发表文章</a></li>
@@ -70,7 +70,7 @@
 
         <ul class="pagination center">
             <li class="disabled" th:class="${currentPage > 1}?'waves-effect':'disabled'"><a href="#!"  th:href="${currentPage > 1}?'/admin/archive/' + ${currentPage - 1}:'#!'"><i class="material-icons">chevron_left</i></a></li>
-            <li th:each="page:${#numbers.sequence(1,__${pageSum}__)}" th:class="${page == __${currentPage}__} ?'active teal lighten-2':'waves-effect'"><a href="" th:href="@{'/admin/archive/' + ${page}}" th:text="${page}"></a></li>
+            <li th:each="page:${#numbers.sequence(1,__${pageSum > 0?pageSum:1}__)}" th:class="${page == __${currentPage}__} ?'active teal lighten-2':'waves-effect'"><a href="" th:href="@{'/admin/archive/' + ${page}}" th:text="${page}"></a></li>
             <!--<li class="active"><a href="#!">1</a></li>-->
             <!--<li class="waves-effect"><a href="#!">2</a></li>-->
             <!--<li class="waves-effect"><a href="#!">3</a></li>-->
@@ -88,7 +88,7 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-footer-icon.png'}">
     </div>
 </div>
 

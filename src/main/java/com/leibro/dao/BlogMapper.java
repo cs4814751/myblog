@@ -32,4 +32,6 @@ public interface BlogMapper {
     List<Blog> selectAllByKeyword(String keyword);
 
     List<Blog> selectAllByTag(String tag);
+
+    List<Blog> selectAllOrderByCreateTimeAsc();
 }

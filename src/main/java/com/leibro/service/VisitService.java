@@ -45,10 +45,27 @@ public class VisitService {
         blogDao.addViewCount(blog.getId());
         List<Tag> tags = tagMapper.selectByBlogId(blog.getId());
         int cacheCount = blogDao.getBlogCacheCount(blog.getId());
+        List<Blog> allBlogs = blogDao.selectAllOrderByCreateTimeAsc();
+        Blog preBlog = null;
+        Blog nextBlog = null;
+        for(Iterator<Blog> iterator = allBlogs.iterator();iterator.hasNext();) {
+            Blog blog1 = iterator.next();
+            if(blog1.getId().equals(blog.getId())) {
+                if(iterator.hasNext()) {
+                    nextBlog = iterator.next();
+                } else {
+                    nextBlog = null;
+                }
+                break;
+            }
+            preBlog = blog1;
+        }
         model.addAttribute("count",cacheCount + blog.getReadCount());
         model.addAttribute("blog",blog);
         model.addAttribute("tags",tags);
         model.addAttribute("author",user);
+        model.addAttribute("preBlog",preBlog);
+        model.addAttribute("nextBlog",nextBlog);
     }
 
     public void blogYearArchive(int year,Model model) {

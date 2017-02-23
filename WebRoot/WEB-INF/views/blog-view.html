@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" th:href="@{'http://oizochynr.bkt.clouddn.com/materialize.min.css'}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/jquery-2.1.1.min.js'}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'http://oizochynr.bkt.clouddn.com/materialize.min.js'}"></script>
-    <script src="../resources/nprogress.js" th:src="@{'http://oizochynr.bkt.clouddn.com/nprogress.js'}"></script>
-    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{'http://oizochynr.bkt.clouddn.com/nprogress.css'}">
-    <link rel="stylesheet" href="../resources/github-markdown.css" th:href="@{'http://oizochynr.bkt.clouddn.com/github-markdown.css'}">
-    <!--<script src="../resources/markdown.js" th:src="@{'http://oizochynr.bkt.clouddn.com/markdown.js'}" ></script>-->
-    <script src="../resources/marked.js" th:src="@{'http://oizochynr.bkt.clouddn.com/marked.js'}" ></script>
-    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.css.network/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'https://okyl890b4.qnssl.com/jquery-2.1.1.min.js'}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'https://okyl890b4.qnssl.com/materialize.min.js'}"></script>
+    <link rel="stylesheet" href="../resources/github-markdown.css" th:href="@{'https://okyl890b4.qnssl.com/github-markdown.css'}">
+    <!--<script src="../resources/markdown.js" th:src="@{/resource/resources/markdown.js}" ></script>-->
+    <script src="../resources/marked.js" th:src="@{'https://okyl890b4.qnssl.com/marked.js'}" ></script>
+    <script src="../resources/nprogress.js" th:src="@{'https://okyl890b4.qnssl.com/nprogress.js'}"></script>
+    <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{'https://okyl890b4.qnssl.com/nprogress.css'}">
+    <script src="https://use.fontawesome.com/98813aa980.js" th:src="@{'https://okyl890b4.qnssl.com/98813aa980.js'}"></script>
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -38,7 +38,7 @@
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
-            <img style="width: 150px"  src="../images/logoko.png" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-logoko.png'}" class="brand-logo" />
+            <a th:href="@{/home}"><img style="width: 150px"  src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}" class="brand-logo" /></a>
 
             <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 
@@ -49,7 +49,7 @@
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
                 <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
-                <li><a class="black-text" href="collapsible.html">About</a></li>
+                <li><a class="black-text" href="collapsible.html" th:href="@{/about}">About</a></li>
                 <li sec:authorize="isAuthenticated()"><a class="black-text" href="#" th:href="@{/admin/archive/1}">Panel</a></li>
                 <li sec:authorize="isAnonymous()"><a class="black-text" href="#modal1">Login</a></li>
                 <li sec:authorize="isAuthenticated()" ><a type="submit" class="black-text" onclick="logout()">Logout</a></li>
@@ -59,7 +59,7 @@
             <ul class="side-nav" id="mobile-demo">
                 <li><a class="black-text" href="#" th:href="@{/home}">Home</a></li>
                 <li><a class="black-text" href="" th:href="@{'/blogs/archive/' + ${#dates.year(#dates.createNow())}}">Archive</a></li>
-                <li><a class="black-text" href="collapsible.html">About</a></li>
+                <li><a class="black-text" href="collapsible.html" th:href="@{/about}">About</a></li>
                 <li sec:authorize="isAuthenticated()"><a class="black-text" href="#" th:href="@{/admin/archive/1}">Panel</a></li>
                 <li sec:authorize="isAnonymous()"><a class="black-text" href="#modal1">Login</a></li>
                 <li sec:authorize="isAuthenticated()" ><a type="submit" class="black-text" onclick="logout()">Logout</a></li>
@@ -70,7 +70,7 @@
 </header>
 
 <div class="row">
-    <div id="blog-container" class="col l8 offset-l2" >
+    <div id="blog-container" class="col l8 m10 offset-m1 s10 offset-s1 offset-l2" >
         <div id="title" >
             <h1 th:text="${blog.title}"></h1>
         </div>
@@ -81,7 +81,7 @@
             </div>
             <div class="col l3">
                 <i class="material-icons" style="vertical-align: middle">date_range</i>
-                <span th:text="${#dates.format(blog.createTime,'YYYY.MM.dd hh:mm')}">2017-01-07 23:00</span>
+                <span th:text="${#dates.format(blog.createTime,'YYYY.MM.dd HH:mm')}">2017-01-07 23:00</span>
             </div>
             <div class="col l3" >
                 <i class="material-icons" style="vertical-align: middle">visibility</i>
@@ -116,7 +116,7 @@
             <div class="col s6 m6 l6 hoverable">
                 <i class="fa fa-angle-left fa-4x" aria-hidden="true" style="vertical-align: middle"></i>
                 <div class="container" style="display: inline-block;vertical-align: top;margin-left: 10px;width: 85%;">
-                    <a href="#" class="black-text" style="font-size: 20px;">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
+                    <a href="#" class="black-text" style="font-size: 20px;" th:href="(${preBlog} != null)?'/blogs/' + ${preBlog.uri}:''" th:text="${preBlog} != null?${preBlog.title}:'无'" >Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
                 </div>
             </div>
             <div class="col s6 m6 l6 hoverable" style="border-left: dashed;border-left-width: 1px;" >
@@ -126,13 +126,22 @@
                 <!--<i class="fa fa-angle-right fa-4x" aria-hidden="true" style="vertical-align: middle;"></i>-->
 
                 <div class="container" style="display: inline-block;vertical-align: top;margin-left: 10px;width: 80%;">
-                    <a href="#" class="black-text" style="font-size: 20px;">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
+                    <a href="#" class="black-text" style="font-size: 20px;" th:href="(${nextBlog} != null)?'/blogs/' + ${nextBlog.uri}:''" th:text="${nextBlog} != null?${nextBlog.title}:'无'">Spring Boot + Mybaits的博客配置啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</a>
                 </div>
                 <i class="right fa fa-angle-right fa-4x" aria-hidden="true" style="vertical-align: middle"></i>
             </div>
         </div>
         <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-
+        <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+        <script th:inline="javascript">
+            var blog_id = /*[[${blog.id}]]*/ null;
+            var cloudTieConfig = {
+                sourceId: blog_id,
+                productKey: "5152120cbb5246219b9df8cb128bce3e",
+                target: "cloud-tie-wrapper"
+            };
+            Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
+        </script>
 
     </div>
 </div>
@@ -140,7 +149,7 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-footer-icon.png'}">
     </div>
 </div>
 
@@ -168,15 +177,12 @@
 
 <script th:inline="javascript">
     var content = /*[[${blog.content}]]*/ null;
-    var blog_id = /*[[${blog.id}]]*/ null;
     marked.setOptions({
         breaks: true
     });
-
     window.onload = function () {
         NProgress.done();
     };
-
     $(document).ready(function () {
         NProgress.set(0.5);
         $('.modal').modal();
@@ -190,16 +196,7 @@
             window.location.href = '/blogs/search?keyword=' + keyword;
         }
     });
-
     $('#content').html(marked(content));
-    var cloudTieConfig = {
-        sourceId: blog_id,
-        productKey: "5152120cbb5246219b9df8cb128bce3e",
-        target: "cloud-tie-wrapper"
-    };
-    var yunManualLoad = true;
-    Tie.loader("aHR0cHM6Ly9hcGkuZ2VudGllLjE2My5jb20vcGMvbGl2ZXNjcmlwdC5odG1s", true);
-
     function logout() {
         var csrf = /*[[${_csrf.token}]]*/ null;
         $.ajax({

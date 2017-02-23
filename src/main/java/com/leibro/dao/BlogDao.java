@@ -38,7 +38,7 @@ public class BlogDao {
                 blogMapper.updateByPrimaryKeySelective(blog);
             }
         }
-        template.delete("count");
+        template.getConnectionFactory().getConnection().flushAll();
         List<Blog> blogs = blogMapper.selectAllOrderByCreateTimeDesc();
         for(Blog blog:blogs) {
             operations.add("count",blog.getId(),0);
@@ -62,6 +62,8 @@ public class BlogDao {
 
     @Caching(evict = {@CacheEvict(cacheNames = "blog",allEntries = true),@CacheEvict(cacheNames = "blogs",allEntries = true)})
     public int deleteByPrimaryKey(Integer id) {
+        ZSetOperations operations = template.opsForZSet();
+        operations.remove("count",id);
         return blogMapper.deleteByPrimaryKey(id);
     }
 
@@ -102,9 +104,14 @@ public class BlogDao {
         return blogMapper.selectByYearAndMonthOrderByDay(year,month);
     }
 
-    @Cacheable(cacheNames = "blogs",key = "'All'")
+    @Cacheable(cacheNames = "blogs",key = "'AllDesc'")
     public List<Blog> selectAllOrderByCreateTimeDesc() {
         return blogMapper.selectAllOrderByCreateTimeDesc();
+    }
+
+    @Cacheable(cacheNames = "blogs",key = "'AllAsc'")
+    public List<Blog> selectAllOrderByCreateTimeAsc() {
+        return blogMapper.selectAllOrderByCreateTimeAsc();
     }
 
     @Cacheable(cacheNames = "blogs",key = "#keyword")

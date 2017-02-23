@@ -20,7 +20,7 @@ public class SchedularTask {
     @Autowired
     RedisTemplate redisTemplate;
 
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void calcCount() {
         ZSetOperations operations = redisTemplate.opsForZSet();
         Set<Integer> entries = operations.range("count",0,-1);

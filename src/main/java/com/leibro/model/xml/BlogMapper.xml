@@ -28,6 +28,15 @@
     ORDER BY create_time
     DESC
   </select>
+  <select id="selectAllOrderByCreateTimeAsc" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM blogs
+    ORDER BY create_time
+    ASC
+  </select>
   <select id="selectAllByKeyword" resultMap="ResultMapWithBLOBs">
     SELECT
     <include refid="Base_Column_List" />

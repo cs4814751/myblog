@@ -25,16 +25,6 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping("/main")
-    public String test() {
-        return "hello";
-    }
-
-    @RequestMapping("/test")
-    public String test2() {
-        return "test";
-    }
-
     @RequestMapping("/home")
     public String visitHome(Model model) {
         visitService.getBlogsForHomeByOffset(model,0);
@@ -58,5 +48,20 @@ public class HomeController {
     public String loginError(Model model) {
         model.addAttribute("error",true);
         return "login";
+    }
+
+    @RequestMapping("/404")
+    public String pageNotFound() {
+        return "404";
+    }
+
+    @RequestMapping("/error")
+    public String internalError() {
+        return "error";
+    }
+
+    @RequestMapping("/about")
+    public String about() {
+        return "about";
     }
 }

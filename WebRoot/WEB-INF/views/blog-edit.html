@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.css.network/css?family=Work+Sans" rel="stylesheet">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'https://okyl890b4.qnssl.com/jquery-2.1.1.min.js'}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js" th:src="@{'https://okyl890b4.qnssl.com/materialize.min.js'}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" th:src="@{'https://okyl890b4.qnssl.com/simplemde.min.css'}">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js" th:src="@{'https://okyl890b4.qnssl.com/simplemde.min.js'}"></script>
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -43,7 +43,7 @@
 
 <ul id="slide-out" class="side-nav fixed">
     <li style="height:100px">
-        <img width="200" src="../images/logoko.png" th:src="@{/resource/images/logoko.png}"  class="brand-logo" style="margin-left:50px;margin-top:10px" />
+        <img width="200" src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}"  class="brand-logo" style="margin-left:50px;margin-top:10px" />
     </li>
     <li ><a href="#!"  th:href="@{/admin/archive/1}">管理文章</a></li>
     <li class="teal lighten-2 "><a href="#!" class="white-text" th:href="@{/admin/blog/new}">发表文章</a></li>
@@ -79,7 +79,7 @@
 <div class="footer-copyright">
     <div class="container center-align ">
         <div class="divider" style="margin-bottom:10px"></div>
-        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{/resource/images/footer-icon.png}">
+        <a style="vertical-align: middle" class="black-text transparent " href="#!">© 2017 Powered By Spring </a><img style="vertical-align: middle" class="responsive-img" src="../images/footer-icon.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-footer-icon.png'}">
     </div>
 </div>
 

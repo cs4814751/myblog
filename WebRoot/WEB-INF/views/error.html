@@ -1,6 +1,7 @@
-<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" th:href="@{'https://okyl890b4.qnssl.com/materialize.min.css'}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.css.network/css?family=Work+Sans" rel="stylesheet">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js" th:src="@{'https://okyl890b4.qnssl.com/jquery-2.1.1.min.js'}"></script>
@@ -23,15 +24,16 @@
 
     </style>
 </head>
+
 <body>
 <script>
     NProgress.start();
 </script>
-
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
             <a th:href="@{/home}"><img style="width: 150px"  src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}" class="brand-logo" /></a>
+
             <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 
                 <input id="search-input" class="black-text tooltipped" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  data-position="bottom" data-delay="50" data-tooltip="Enter to search" />
@@ -61,19 +63,15 @@
     </nav>
 </header>
 
-<div class="row" >
-
-    <div class="container col l8 offset-l2" >
-        <h2>Search Result For: <span class="teal-text lighten-2-text" th:text="${keyword}">Test</span></h2>
-        <div class="container col l12" th:each="blog:${blogs}">
-        <div class="section">
-            <a class="black-text" href="#" th:href="@{'/blogs/' + ${blog.uri}}"><h5 th:text="${blog.title}">Section 1</h5></a>
-            <p th:text="${abstractContents.get(__${blog.id}__)}">Stuff</p>
-        </div>
-        <div class="divider"></div>
+    <div class="container">
+        <div class="center">
+            <img class="responsive-img" src="../images/404.png" style="margin-top: 50px" th:src="@{'http://oizochynr.bkt.clouddn.com/2017-02-01-404.png'}">
         </div>
     </div>
-</div>
+<div class="container">
+        <h1 class="center">服务器抽了，请稍后再试</h1>
+    </div>
+
 
 
 <div class="footer-copyright">
@@ -83,60 +81,15 @@
     </div>
 </div>
 
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>Login</h4>
-        <div class="row">
-            <form class="col s12" action="#" th:action="@{/login}" method="post">
-                <div class="input-field col s12">
-                    <input placeholder="Please input username" id="user_name" type="text" class="validate" name="username">
-                    <label for="user_name">Username</label>
-                </div>
-                <div class="input-field col s12">
-                    <input placeholder="Please input password" id="password" type="password" class="validate" name="password">
-                    <label for="password">Password</label>
-                </div>
-                <div class="col s2 offset-s10">
-                    <input type="submit" class="waves-effect waves-light btn" value="Log"/>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script th:inline="javascript" >
-    $(document).ready(function () {
-        NProgress.set(0.5);
-        $('.modal').modal();
-        $('.tooltipped').tooltip({delay: 50});
-        $(".button-collapse").sideNav();
-    });
 
+<script>
     window.onload = function () {
         NProgress.done();
     };
-
-    $('#search-input').bind('keypress',function(e){
-        if(e.keyCode == '13') {
-            var keyword = $(this).val();
-            window.location.href = '/blogs/search?keyword=' + keyword;
-        }
+    $(document).ready(function() {
+        NProgress.set(0.5);
     });
-
-    function logout() {
-        var csrf = /*[[${_csrf.token}]]*/ null;
-        $.ajax({
-            method:'post',
-            url:'/logout',
-            headers:{
-                'X-CSRF-TOKEN':csrf
-            },
-            success:function () {
-                window.location.href = '/home';
-            }
-        });
-    }
 </script>
-
 </body>
 </html>

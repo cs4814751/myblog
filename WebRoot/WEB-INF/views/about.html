@@ -1,4 +1,5 @@
-<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css" th:href="@{'https://okyl890b4.qnssl.com/materialize.min.css'}">
     <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
@@ -23,15 +24,16 @@
 
     </style>
 </head>
+
 <body>
 <script>
     NProgress.start();
 </script>
-
 <header >
     <nav class="transparent" >
         <div class="nav-wrapper">
-            <a th:href="@{/home}"><img style="width: 150px"  src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}" class="brand-logo" /></a>
+            <img style="width: 150px"  src="../images/logoko.png" th:src="@{'https://okyl890b4.qnssl.com/2017-02-01-logoko.png'}" class="brand-logo" />
+
             <div class="hide-on-med-and-down" style="height:64px;float:right;display:inline-block;width:180px;margin-left: 10px" >
 
                 <input id="search-input" class="black-text tooltipped" style="padding-left:30px;position:absolute;margin-top:10px;width:130px;display:inline" type="text"  data-position="bottom" data-delay="50" data-tooltip="Enter to search" />
@@ -61,19 +63,40 @@
     </nav>
 </header>
 
-<div class="row" >
+    <div class="col s6 m6 l6 container markdown-body" style="margin-top: 50px">
+        <h4 id="一个脱离了高级趣味的人">一个脱离了高级趣味的人</h4>
 
-    <div class="container col l8 offset-l2" >
-        <h2>Search Result For: <span class="teal-text lighten-2-text" th:text="${keyword}">Test</span></h2>
-        <div class="container col l12" th:each="blog:${blogs}">
-        <div class="section">
-            <a class="black-text" href="#" th:href="@{'/blogs/' + ${blog.uri}}"><h5 th:text="${blog.title}">Section 1</h5></a>
-            <p th:text="${abstractContents.get(__${blog.id}__)}">Stuff</p>
-        </div>
-        <div class="divider"></div>
-        </div>
+        <p>我是山东大学控制工程专业的一名在校研究生，今年研二，曾经学过嵌入式，后来走上了Java后端这条不归路。 <br>
+            这个网站，当然，也是一个脱离了高级趣味的博客。 <br>
+            相对于微博，朋友圈，我在这里可以更加自由的说说话，不用顾忌任何人的感受，反正也没几个人会看到。不像其他的社交媒体，想说的话，想发的文章，多少次欲言又止，充满顾忌。这个博客，反正我就随便说说，拿来当技术的试验田，也挺好的。 <br>
+            整个博客的选用的开源框架如下：</p>
+
+        <ul><li>Spring MVC</li>
+            <li>Spring Security</li>
+            <li>Spring Data Redis</li>
+            <li>Mybatis</li>
+            <li>Redis</li>
+            <li>PageHelper</li>
+            <li>Marked.js</li>
+            <li>SimpleMDE</li>
+            <li>NProgress</li>
+            <li>Materializecss</li>
+        </ul>
+
+        <p>实现了博客的日常所需要的所有功能，Redis提供缓存，实现了博客访问次数实时统计，数据库选用MySql进行持久化存储。 <br>
+            接下来还将对本博客进行持续性的优化和重构。 <br>
+            Todo:</p>
+
+        <ol><li rel="1">Spring Boot进行重构</li>
+            <li rel="2">改进Spring Cache和Spring Data Redis的配合</li>
+            <li rel="3">增加相册的功能</li>
+            <li rel="4">……</li>
+        </ol>
+
+        <p>现在在导师公司进行管理平台开发工作，求一份暑期实习，如果有美腻 or 威武的 HR 看到了我的博客觉得还不错，请联系我呀呀呀呀！！！</p>
     </div>
-</div>
+
+
 
 
 <div class="footer-copyright">
@@ -83,6 +106,7 @@
     </div>
 </div>
 
+<!-- Modal Structure -->
 <div id="modal1" class="modal">
     <div class="modal-content">
         <h4>Login</h4>
@@ -104,23 +128,14 @@
     </div>
 </div>
 
-<script th:inline="javascript" >
-    $(document).ready(function () {
-        NProgress.set(0.5);
-        $('.modal').modal();
-        $('.tooltipped').tooltip({delay: 50});
-        $(".button-collapse").sideNav();
-    });
-
+<script th:inline="javascript">
     window.onload = function () {
         NProgress.done();
     };
-
-    $('#search-input').bind('keypress',function(e){
-        if(e.keyCode == '13') {
-            var keyword = $(this).val();
-            window.location.href = '/blogs/search?keyword=' + keyword;
-        }
+    $(document).ready(function() {
+        NProgress.set(0.5);
+        $(".button-collapse").sideNav();
+        $('.modal').modal();
     });
 
     function logout() {
@@ -134,9 +149,10 @@
             success:function () {
                 window.location.href = '/home';
             }
+
+
         });
     }
 </script>
-
 </body>
 </html>
