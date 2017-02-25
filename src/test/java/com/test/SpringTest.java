@@ -11,8 +11,6 @@ import com.leibro.model.Blog;
 import com.leibro.service.VisitService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -79,19 +77,6 @@ public class SpringTest {
         System.out.print(Pattern.compile("</?[^>]+>").matcher(str).replaceAll(""));
     }
 
-    @Test
-    public void test3() {
-        Blog blog = blogMapper.selectByUri("zhe-shi-yi-pian-ce-shi-wen-zhang-a-a");
-        PegDownProcessor pegDownProcessor = new PegDownProcessor(Extensions.HARDWRAPS);
-        String html = pegDownProcessor.markdownToHtml(blog.getContent());
-        Matcher matcher = Pattern.compile("<p>((\\w|\\W)*?)</p>").matcher(html);
-        StringBuilder stringBuilder = new StringBuilder();
-        while(matcher.find()) {
-            stringBuilder.append(matcher.group(0));
-        }
-        String doc = Pattern.compile("</?[^>]+>").matcher(stringBuilder.toString()).replaceAll("");
-        System.out.println(doc.substring(0,299) + "...");
-    }
 
     @Test
     public void test4() {

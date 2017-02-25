@@ -2,7 +2,10 @@ package com.leibro.utils;
 
 
 
-import org.pegdown.PegDownProcessor;
+import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+
 
 
 
@@ -12,7 +15,9 @@ import org.pegdown.PegDownProcessor;
 public class MarkdownToHtml {
 
     public static String markdownToHtml(String markdown) {
-        PegDownProcessor pegDownProcessor = new PegDownProcessor();
-        return pegDownProcessor.markdownToHtml(markdown);
+        Parser parser = Parser.builder().build();
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(document);
     }
 }

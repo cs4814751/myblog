@@ -1,7 +1,5 @@
 package com.leibro.utils;
 
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

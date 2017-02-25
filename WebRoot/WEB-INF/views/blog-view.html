@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
+    <title>文章</title>
+    <link rel="icon" href="https://okyl890b4.qnssl.com/bitbug_favicon%20%282%29.ico" mce_href="https://okyl890b4.qnssl.com/bitbug_favicon%20%282%29.ico" type="image/x-icon" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
     <link href="https://fonts.css.network/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.css.network/css?family=Work+Sans" rel="stylesheet">
@@ -12,6 +14,8 @@
     <script src="../resources/nprogress.js" th:src="@{'https://okyl890b4.qnssl.com/nprogress.js'}"></script>
     <link rel="stylesheet" href="../resources/nprogress.css" th:href="@{'https://okyl890b4.qnssl.com/nprogress.css'}">
     <script src="https://use.fontawesome.com/98813aa980.js" th:src="@{'https://okyl890b4.qnssl.com/98813aa980.js'}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
     <style>
         body {
             font-family: 'Work Sans', sans-serif;
@@ -33,6 +37,7 @@
 <body>
 <script>
     NProgress.start();
+    hljs.initHighlightingOnLoad();
 </script>
 
 <header >
